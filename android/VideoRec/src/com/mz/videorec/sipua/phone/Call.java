@@ -1,4 +1,4 @@
-package org.sipdroid.sipua.phone;
+package com.mz.videorec.sipua.phone;
 
 /*
  * Copyright (C) 2009 The Sipdroid Open Source Project

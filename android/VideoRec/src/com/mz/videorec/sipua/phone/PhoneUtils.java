@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package org.sipdroid.sipua.phone;
+package com.mz.videorec.sipua.phone;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.provider.Contacts;
 import android.text.TextUtils;
 import android.util.Log;
-import org.sipdroid.sipua.*;
 
 public class PhoneUtils {
     private static final String LOG_TAG = "PhoneUtils";
@@ -208,7 +207,7 @@ static String getCompactNameFromCallerInfo(CallerInfo ci, Context context) {
     }
     // TODO: figure out UNKNOWN, PRIVATE numbers?
     if (compactName == null) {
-        compactName = context.getString(R.string.unknown);
+        compactName = "Unknown";
     }
     return compactName;
 }

@@ -24,14 +24,6 @@ package com.mz.videorec.sipua;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.sipdroid.codecs.Codec;
-import org.sipdroid.codecs.Codecs;
-import org.sipdroid.media.JAudioLauncher;
-import org.sipdroid.media.MediaLauncher;
-import org.sipdroid.media.RtpStreamReceiver;
-import org.sipdroid.sipua.ui.Receiver;
-import org.sipdroid.sipua.ui.Settings;
-import org.sipdroid.sipua.ui.Sipdroid;
 import org.zoolu.net.IpAddress;
 import org.zoolu.sdp.AttributeField;
 import org.zoolu.sdp.ConnectionField;
@@ -51,6 +43,9 @@ import org.zoolu.sip.provider.SipStack;
 import org.zoolu.tools.Log;
 import org.zoolu.tools.LogLevel;
 import org.zoolu.tools.Parser;
+
+import com.mz.videorec.codecs.Codec;
+import com.mz.videorec.codecs.Codecs;
 
 /**
  * Simple SIP user agent (UA). It includes audio/video applications.
