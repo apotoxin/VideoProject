@@ -17,19 +17,19 @@
  * along with this source code; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+package org.sipdroid.media;
 
-package com.mz.videorec.sipua.ui;
+/** Interface for classes that start media application such as for audio or video */
+public interface MediaLauncher {
+	/** Starts media application */
+	public boolean startMedia();
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+	/** Stops media application */
+	public boolean stopMedia();
+	
+	public boolean muteMedia();
+	public int speakerMedia(int mode);
+	public void bluetoothMedia();
 
-public class LoopAlarm extends BroadcastReceiver {
-
-    @Override
-	public void onReceive(Context context, Intent intent) {
-    	if (!Sipdroid.release) Log.i("SipUA:","alarm");
-    	Receiver.engine(context).keepAlive();
-    }
+	public boolean sendDTMF(char c);
 }
