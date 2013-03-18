@@ -17,7 +17,7 @@
  * along with this source code; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,9 +27,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import org.sipdroid.sipua.R;
-import org.sipdroid.sipua.RegisterAgent;
-import org.sipdroid.sipua.SipdroidEngine;
+import com.mz.videorec.R;
+import com.mz.videorec.sipua.RegisterAgent;
+import com.mz.videorec.sipua.SipdroidEngine;
+ 
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

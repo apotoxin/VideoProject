@@ -23,9 +23,8 @@ package com.mz.videorec.sipua;
 
 import java.util.Vector;
 
+ 
 import org.sipdroid.sipua.ui.Receiver;
-import org.sipdroid.sipua.ui.Settings;
-import org.sipdroid.sipua.ui.Sipdroid;
 import org.zoolu.sip.address.NameAddress;
 import org.zoolu.sip.authentication.DigestAuthentication;
 import org.zoolu.sip.dialog.SubscriberDialog;

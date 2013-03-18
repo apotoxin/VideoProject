@@ -1,4 +1,4 @@
-package org.sipdroid.sipua.phone;
+package com.mz.videorec.sipua.phone;
 
 /*
  * Copyright (C) 2009 The Sipdroid Open Source Project
@@ -20,10 +20,10 @@ package org.sipdroid.sipua.phone;
  * along with this source code; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+ 
 
-import org.sipdroid.sipua.R;
-import org.sipdroid.sipua.ui.InCallScreen;
-import org.sipdroid.sipua.ui.Receiver;
+import com.mz.videorec.sipua.ui.InCallScreen;
+import com.mz.videorec.sipua.ui.Receiver;
 
 import android.content.Context;
 import android.os.SystemClock;

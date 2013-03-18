@@ -28,6 +28,8 @@ import org.zoolu.sdp.MediaField;
 import org.zoolu.sdp.SessionDescriptor;
 import org.zoolu.sdp.AttributeField;
 
+import com.mz.videorec.sipua.ui.Settings;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.SharedPreferences;

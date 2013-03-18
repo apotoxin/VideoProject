@@ -3,6 +3,12 @@ package com.mz.videorec.sipua.ui;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import com.mz.videorec.media.RtpStreamReceiver;
+import com.mz.videorec.net.RtpPacket;
+import com.mz.videorec.net.RtpSocket;
+import com.mz.videorec.net.SipdroidSocket;
+import com.mz.videorec.sipua.UserAgent;
+
  
 
 import android.app.Activity;
@@ -93,13 +99,12 @@ public class CallScreen extends Activity implements DialogInterface.OnClickListe
 			menu.findItem(MUTE_MENU_ITEM).setVisible(true);
 			menu.findItem(VIDEO_MENU_ITEM).setVisible(VideoCamera.videoValid() && Receiver.call_state == UserAgent.UA_STATE_INCALL && Receiver.engine(this).getRemoteVideo() != 0);
 			menu.findItem(TRANSFER_MENU_ITEM).setVisible(true);
-			menu.findItem(BLUETOOTH_MENU_ITEM).setVisible(RtpStreamReceiver.isBluetoothAvailable());
 		} else {
 			menu.findItem(HOLD_MENU_ITEM).setVisible(false);
 			menu.findItem(MUTE_MENU_ITEM).setVisible(false);
 			menu.findItem(VIDEO_MENU_ITEM).setVisible(false);
 			menu.findItem(TRANSFER_MENU_ITEM).setVisible(false);
-			menu.findItem(BLUETOOTH_MENU_ITEM).setVisible(false);
+		
 		}
 		menu.findItem(SPEAKER_MENU_ITEM).setVisible(!(Receiver.headset > 0 || Receiver.docked > 0 || Receiver.bluetooth > 0));
 		menu.findItem(ANSWER_MENU_ITEM).setVisible(Receiver.call_state == UserAgent.UA_STATE_INCOMING_CALL);
@@ -157,15 +162,11 @@ public class CallScreen extends Activity implements DialogInterface.OnClickListe
 			Receiver.engine(this).speaker(RtpStreamReceiver.speakermode == AudioManager.MODE_NORMAL?
 					AudioManager.MODE_IN_CALL:AudioManager.MODE_NORMAL);
 			break;
-			
-		case BLUETOOTH_MENU_ITEM:
-			Receiver.engine(this).togglebluetooth();
-			break;
-					
+		 
 		case VIDEO_MENU_ITEM:
 			if (Receiver.call_state == UserAgent.UA_STATE_HOLD) Receiver.engine(this).togglehold();
 			try {
-				intent = new Intent(this, org.sipdroid.sipua.ui.VideoCamera.class);
+				intent = new Intent(this,  VideoCamera.class);
 				startActivity(intent);
 			} catch (ActivityNotFoundException e) {
 			}
@@ -220,7 +221,7 @@ public class CallScreen extends Activity implements DialogInterface.OnClickListe
 		super.onResume();
 		if (Integer.parseInt(Build.VERSION.SDK) >= 5 && Integer.parseInt(Build.VERSION.SDK) <= 7)
 			disableKeyguard();
-		if (Receiver.call_state == UserAgent.UA_STATE_INCALL && socket == null && Receiver.engine(mContext).getLocalVideo() != 0 && Receiver.engine(mContext).getRemoteVideo() != 0 && PreferenceManager.getDefaultSharedPreferences(this).getString(org.sipdroid.sipua.ui.Settings.PREF_SERVER, org.sipdroid.sipua.ui.Settings.DEFAULT_SERVER).equals(org.sipdroid.sipua.ui.Settings.DEFAULT_SERVER))
+		if (Receiver.call_state == UserAgent.UA_STATE_INCALL && socket == null && Receiver.engine(mContext).getLocalVideo() != 0 && Receiver.engine(mContext).getRemoteVideo() != 0 && PreferenceManager.getDefaultSharedPreferences(this).getString( Settings.PREF_SERVER, Settings.DEFAULT_SERVER).equals(Settings.DEFAULT_SERVER))
 	        (new Thread() {
 				public void run() {
 					RtpPacket keepalive = new RtpPacket(new byte[12],0);
@@ -261,7 +262,7 @@ public class CallScreen extends Activity implements DialogInterface.OnClickListe
 								intent.putExtra("justplay",true);
 								mHandler.sendEmptyMessage(0);
 							} else {
-								Intent i = new Intent(mContext, org.sipdroid.sipua.ui.VideoCamera.class);
+								Intent i = new Intent(mContext, VideoCamera.class);
 								i.putExtra("justplay",true);
 								startActivity(i);
 							}

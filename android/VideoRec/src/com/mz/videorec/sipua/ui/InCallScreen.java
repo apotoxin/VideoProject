@@ -1,4 +1,4 @@
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 /*
  * Copyright (C) 2009 The Sipdroid Open Source Project
@@ -21,15 +21,15 @@ package org.sipdroid.sipua.ui;
  */
 
 import java.util.HashMap;
+ 
 
-import org.sipdroid.media.RtpStreamReceiver;
-import org.sipdroid.media.RtpStreamSender;
-import org.sipdroid.sipua.R;
-import org.sipdroid.sipua.UserAgent;
-import org.sipdroid.sipua.phone.Call;
-import org.sipdroid.sipua.phone.CallCard;
-import org.sipdroid.sipua.phone.Phone;
-import org.sipdroid.sipua.phone.SlidingCardManager;
+import com.mz.videorec.media.RtpStreamReceiver;
+import com.mz.videorec.media.RtpStreamSender;
+import com.mz.videorec.sipua.UserAgent;
+import com.mz.videorec.sipua.phone.CallCard;
+import com.mz.videorec.sipua.phone.Phone;
+import com.mz.videorec.sipua.phone.SlidingCardManager;
+ 
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -129,7 +129,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
     	if (!Sipdroid.release) Log.i("SipUA:","on pause");
     	switch (Receiver.call_state) {
     	case UserAgent.UA_STATE_INCOMING_CALL:
-    		if (!RtpStreamReceiver.isBluetoothAvailable()) Receiver.moveTop();
+    		  Receiver.moveTop();
     		break;
     	case UserAgent.UA_STATE_IDLE:
     		if (Receiver.ccCall != null)
@@ -164,12 +164,12 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
 		switch (Receiver.call_state) {
 		case UserAgent.UA_STATE_INCOMING_CALL:
 			if (Receiver.pstn_state == null || Receiver.pstn_state.equals("IDLE"))
-				if (PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(org.sipdroid.sipua.ui.Settings.PREF_AUTO_ON, org.sipdroid.sipua.ui.Settings.DEFAULT_AUTO_ON) &&
+				if (PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_AUTO_ON, com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_ON) &&
 						!mKeyguardManager.inKeyguardRestrictedInputMode())
 					mHandler.sendEmptyMessageDelayed(MSG_ANSWER, 1000);
-				else if ((PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(org.sipdroid.sipua.ui.Settings.PREF_AUTO_ONDEMAND, org.sipdroid.sipua.ui.Settings.DEFAULT_AUTO_ONDEMAND) &&
-						PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(org.sipdroid.sipua.ui.Settings.PREF_AUTO_DEMAND, org.sipdroid.sipua.ui.Settings.DEFAULT_AUTO_DEMAND)) ||
-						(PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(org.sipdroid.sipua.ui.Settings.PREF_AUTO_HEADSET, org.sipdroid.sipua.ui.Settings.DEFAULT_AUTO_HEADSET) &&
+				else if ((PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_AUTO_ONDEMAND, com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_ONDEMAND) &&
+						PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_AUTO_DEMAND, com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_DEMAND)) ||
+						(PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_AUTO_HEADSET, com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_HEADSET) &&
 								Receiver.headset > 0))
 					mHandler.sendEmptyMessageDelayed(MSG_ANSWER_SPEAKER, 10000);
 			break;
@@ -203,7 +203,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
 	
 					if (Settings.System.getInt(getContentResolver(),
 							Settings.System.DTMF_TONE_WHEN_DIALING, 1) == 1)
-						tg = new ToneGenerator(AudioManager.STREAM_VOICE_CALL, (int)(ToneGenerator.MAX_VOLUME*2*org.sipdroid.sipua.ui.Settings.getEarGain()));
+						tg = new ToneGenerator(AudioManager.STREAM_VOICE_CALL, (int)(ToneGenerator.MAX_VOLUME*2*com.mz.videorec.sipua.ui.Settings.getEarGain()));
 					for (;;) {
 						if (!running) {
 							t = null;
@@ -483,34 +483,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
         }
         return super.onKeyDown(keyCode, event);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		boolean result = super.onCreateOptionsMenu(menu);
-
-		MenuItem m = menu.add(0, DTMF_MENU_ITEM, 0, R.string.menu_dtmf);
-		m.setIcon(R.drawable.ic_menu_dial_pad);
-		return result;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean result = super.onPrepareOptionsMenu(menu);
-
-		menu.findItem(DTMF_MENU_ITEM).setVisible(Receiver.call_state == UserAgent.UA_STATE_INCALL);
-		return !(pactive || SystemClock.elapsedRealtime()-pactivetime < 1000);
-	}
-		
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case DTMF_MENU_ITEM:
-			mDialerDrawer.animateOpen();
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+ 
 	
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -549,7 +522,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
 	
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		boolean keepon = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(org.sipdroid.sipua.ui.Settings.PREF_KEEPON, org.sipdroid.sipua.ui.Settings.DEFAULT_KEEPON);
+		boolean keepon = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_KEEPON,com.mz.videorec.sipua.ui.Settings.DEFAULT_KEEPON);
 		if (first) {
 			first = false;
 			return;

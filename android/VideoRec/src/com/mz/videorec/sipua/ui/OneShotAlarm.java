@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

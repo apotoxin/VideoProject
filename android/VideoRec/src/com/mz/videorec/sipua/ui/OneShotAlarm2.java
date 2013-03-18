@@ -1,4 +1,4 @@
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 /*
  * Copyright (C) 2009 The Sipdroid Open Source Project
@@ -20,7 +20,9 @@ package org.sipdroid.sipua.ui;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-import org.sipdroid.sipua.SipdroidEngine;
+ 
+
+import com.mz.videorec.sipua.SipdroidEngine;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,14 +35,14 @@ public class OneShotAlarm2 extends BroadcastReceiver {
     @Override
 	public void onReceive(Context context, Intent intent) {
     	if (!Sipdroid.release) Log.i("SipUA:","alarm2");
-		for (int i = 0; i < SipdroidEngine.LINES; i++)
+ 
 			if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_WLAN+(i!=0?i:""), Settings.DEFAULT_WLAN) ||
 	        		PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_3G+(i!=0?i:""), Settings.DEFAULT_3G) ||
 	        		PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_VPN+(i!=0?i:""), Settings.DEFAULT_VPN) ||
 	        		PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_EDGE+(i!=0?i:""), Settings.DEFAULT_EDGE)) {
 	        	context.startService(new Intent(context,RegisterService.class));
 	        	return;
-	        }
+	        
         context.stopService(new Intent(context,RegisterService.class));
     }
 }

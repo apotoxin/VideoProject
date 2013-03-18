@@ -26,6 +26,9 @@ import java.util.List;
 
 import org.zoolu.tools.Random;
 
+import com.mz.videorec.sipua.SipdroidEngine;
+import com.mz.videorec.sipua.UserAgent;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -402,7 +405,7 @@ public class Sipdroid extends Activity implements OnDismissListener {
 			
 		case CONFIGURE_MENU_ITEM: {
 			try {
-				intent = new Intent(this, org.sipdroid.sipua.ui.Settings.class);
+				intent = new Intent(this, Settings.class);
 				startActivity(intent);
 			} catch (ActivityNotFoundException e) {
 			}

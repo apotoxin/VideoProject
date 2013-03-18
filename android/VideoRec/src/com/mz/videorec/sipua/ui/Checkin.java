@@ -1,11 +1,12 @@
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-
-import org.sipdroid.sipua.UserAgentProfile;
+ 
 import org.zoolu.tools.Random;
+
+import com.mz.videorec.sipua.UserAgentProfile;
 
 import android.content.Intent;
 import android.net.Uri;

@@ -1,4 +1,4 @@
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 /*
  * Copyright (C) 2009 The Sipdroid Open Source Project

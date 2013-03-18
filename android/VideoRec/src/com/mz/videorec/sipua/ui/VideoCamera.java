@@ -27,7 +27,11 @@ import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
+import com.mz.videorec.media.RtpStreamReceiver;
+import com.mz.videorec.media.RtpStreamSender;
 import com.mz.videorec.net.RtpPacket;
+import com.mz.videorec.net.RtpSocket;
+import com.mz.videorec.net.SipdroidSocket;
 
 import android.content.Context;
 import android.hardware.Camera;
@@ -217,7 +221,7 @@ public class VideoCamera extends CallScreen implements
             mVideoPreview.setVisibility(View.VISIBLE);
 	        if (!mMediaRecorderRecording) initializeVideo();
 	        startVideoRecording();
-        } else if (Receiver.engine(mContext).getRemoteVideo() != 0 && PreferenceManager.getDefaultSharedPreferences(this).getString(org.sipdroid.sipua.ui.Settings.PREF_SERVER, org.sipdroid.sipua.ui.Settings.DEFAULT_SERVER).equals(org.sipdroid.sipua.ui.Settings.DEFAULT_SERVER)) {
+        } else if (Receiver.engine(mContext).getRemoteVideo() != 0 && PreferenceManager.getDefaultSharedPreferences(this).getString(com.mz.videorec.sipua.ui.Settings.PREF_SERVER, com.mz.videorec.sipua.ui.Settings.DEFAULT_SERVER).equals(com.mz.videorec.sipua.ui.Settings.DEFAULT_SERVER)) {
         	mVideoFrame.setVideoURI(Uri.parse("rtsp://"+Receiver.engine(mContext).getRemoteAddr()+"/"+
         		Receiver.engine(mContext).getRemoteVideo()+"/sipdroid"));
         	mVideoFrame.setMediaController(mMediaController = new MediaController(this));
