@@ -20,10 +20,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
-import org.sipdroid.sipua.R;
-import org.sipdroid.sipua.SipdroidEngine;
+import com.mz.videorec.sipua.SipdroidEngine;
 
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -129,8 +129,6 @@ import com.mz.videorec.sipua.SipdroidEngine;
 			if (mSipdroidEngine == null) {
 				mSipdroidEngine = new SipdroidEngine();
 				mSipdroidEngine.StartEngine();
-				if (Integer.parseInt(Build.VERSION.SDK) >= 8)
-					Bluetooth.init();
 			} else
 				mSipdroidEngine.CheckEngine();
         	context.startService(new Intent(context,RegisterService.class));

@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -54,14 +54,14 @@ public class SipRingtonePreference extends RingtonePreference
     protected void onSaveRingtone(Uri ringtoneUri) 
     {
         Editor edit = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
-		edit.putString(org.sipdroid.sipua.ui.Settings.PREF_SIPRINGTONE, ringtoneUri != null ? ringtoneUri.toString() : org.sipdroid.sipua.ui.Settings.DEFAULT_SIPRINGTONE);		
+		edit.putString(com.mz.videorec.sipua.ui.Settings.PREF_SIPRINGTONE, ringtoneUri != null ? ringtoneUri.toString() : com.mz.videorec.sipua.ui.Settings.DEFAULT_SIPRINGTONE);		
 		edit.commit();        
     }
 
     @Override
     protected Uri onRestoreRingtone() 
     {
-        String uriString = PreferenceManager.getDefaultSharedPreferences(mContext).getString(org.sipdroid.sipua.ui.Settings.PREF_SIPRINGTONE,
+        String uriString = PreferenceManager.getDefaultSharedPreferences(mContext).getString(com.mz.videorec.sipua.ui.Settings.PREF_SIPRINGTONE,
         		Settings.System.DEFAULT_RINGTONE_URI.toString());
         return !TextUtils.isEmpty(uriString) ? Uri.parse(uriString) : null;        
     }    

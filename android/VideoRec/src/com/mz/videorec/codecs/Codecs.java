@@ -23,9 +23,7 @@ package com.mz.videorec.codecs;
 import java.util.HashMap;
 import java.util.Vector;
 
-import org.sipdroid.sipua.R;
-import org.sipdroid.sipua.ui.Receiver;
-import org.sipdroid.sipua.ui.Settings;
+ 
 import org.zoolu.sdp.MediaField;
 import org.zoolu.sdp.SessionDescriptor;
 import org.zoolu.sdp.AttributeField;
@@ -54,7 +52,6 @@ public class Codecs {
 //			add(new SILK8());
 			add(new alaw());
 			add(new ulaw());
-			add(new Speex());
 			add(new GSM());
 			add(new BV16());
 		}};

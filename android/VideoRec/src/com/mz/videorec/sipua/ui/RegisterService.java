@@ -20,7 +20,8 @@
 
 package com.mz.videorec.sipua.ui;
 
-import org.sipdroid.media.RtpStreamReceiver;
+
+import com.mz.videorec.media.RtpStreamReceiver;
 
 import android.app.Service;
 import android.content.Intent;

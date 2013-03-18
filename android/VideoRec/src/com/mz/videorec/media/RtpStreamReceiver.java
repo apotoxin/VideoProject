@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.SocketException;
 
 import com.mz.videorec.codecs.Codecs;
+import com.mz.videorec.net.RtpPacket;
 import com.mz.videorec.net.RtpSocket;
 import com.mz.videorec.net.SipdroidSocket;
 
@@ -389,13 +390,13 @@ public class RtpStreamReceiver extends Thread {
 			for (;;)
 				rtp_socket.receive(rtp_packet);
 		} catch (SocketException e2) {
-			if (!Sipdroid.release) e2.printStackTrace();
+			e2.printStackTrace();
 		} catch (IOException e) {
 		}
 		try {
 			rtp_socket.getDatagramSocket().setSoTimeout(SO_TIMEOUT);
 		} catch (SocketException e2) {
-			if (!Sipdroid.release) e2.printStackTrace();
+			e2.printStackTrace();
 		}
 		seq = 0;
 	}

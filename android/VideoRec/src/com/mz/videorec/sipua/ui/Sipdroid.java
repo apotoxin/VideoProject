@@ -19,14 +19,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sipdroid.sipua.R;
-import org.sipdroid.sipua.SipdroidEngine;
-import org.sipdroid.sipua.UserAgent;
 import org.zoolu.tools.Random;
 
 import android.app.Activity;

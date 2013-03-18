@@ -1,4 +1,4 @@
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 /*
  * Copyright (C) 2009 The Sipdroid Open Source Project
@@ -27,12 +27,7 @@ import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
-import org.sipdroid.media.RtpStreamReceiver;
-import org.sipdroid.media.RtpStreamSender;
-import org.sipdroid.net.RtpPacket;
-import org.sipdroid.net.RtpSocket;
-import org.sipdroid.net.SipdroidSocket;
-import org.sipdroid.sipua.R;
+import com.mz.videorec.net.RtpPacket;
 
 import android.content.Context;
 import android.hardware.Camera;

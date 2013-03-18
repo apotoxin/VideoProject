@@ -18,17 +18,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package org.sipdroid.sipua.ui;
+package com.mz.videorec.sipua.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import org.sipdroid.codecs.Codecs;
-import org.sipdroid.media.RtpStreamReceiver;
-import org.sipdroid.sipua.R;
-import org.sipdroid.sipua.SipdroidEngine;
+
 import org.zoolu.sip.provider.SipStack;
+
+import com.mz.videorec.codecs.Codecs;
+import com.mz.videorec.sipua.SipdroidEngine;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -329,57 +329,15 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-	    menu.add(0, MENU_IMPORT, 0, getString(R.string.settings_profile_menu_import)).setIcon(android.R.drawable.ic_menu_upload);
-	    menu.add(0, MENU_EXPORT, 0, getString(R.string.settings_profile_menu_export)).setIcon(android.R.drawable.ic_menu_save);
-	    menu.add(0, MENU_DELETE, 0, getString(R.string.settings_profile_menu_delete)).setIcon(android.R.drawable.ic_menu_delete);
-        return true;
+	     return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
     	context = this;
 
     	switch (item.getItemId()) {
-            case MENU_IMPORT:
-            	// Get the content of the directory
-            	profileFiles = getProfileList();
-            	if (profileFiles != null && profileFiles.length > 0) {
-	            	// Show dialog with the files
-	    			new AlertDialog.Builder(this)
-	    			.setTitle(getString(R.string.settings_profile_dialog_profiles_title))
-	    			.setIcon(android.R.drawable.ic_menu_upload)
-	    			.setItems(profileFiles, profileOnClick)
-	    			.show();
-            	} else {
-	                Toast.makeText(this, "No profile found.", Toast.LENGTH_SHORT).show();
-            	}
-                return true;
-                
-            case MENU_EXPORT:
-            	exportSettings();
-            	break;
-
-            case MENU_DELETE:
-            	// Get the content of the directory
-            	profileFiles = getProfileList();
-            	new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.settings_profile_dialog_delete_title))
-                .setIcon(android.R.drawable.ic_menu_delete)
-    			.setItems(profileFiles, new DialogInterface.OnClickListener() {
-    				// Ask the user to be sure to delete it
-    				public void onClick(DialogInterface dialog, int whichItem) {
-        				profileToDelete = whichItem;
-    					new AlertDialog.Builder(context)
-    	                .setIcon(android.R.drawable.ic_dialog_alert)
-    	                .setTitle(getString(R.string.settings_profile_dialog_delete_title))
-    	                .setMessage(getString(R.string.settings_profile_dialog_delete_text, profileFiles[whichItem]))
-    	                .setPositiveButton(android.R.string.ok, deleteOkButtonClick)
-    	                .setNegativeButton(android.R.string.cancel, null)
-    	                .show();
-    				}
-    			})
-                .show();
-                return true;
-        }
+    	
+    	}
 
         return false;
     }
@@ -403,18 +361,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
     	return s.getString(PREF_USERNAME, DEFAULT_USERNAME) + "@" + provider;
     }
 
-    private void exportSettings() {
-		if (! settings.getString(PREF_USERNAME, "").equals("") && ! settings.getString(PREF_SERVER, "").equals(""))
-	        try {
-	        	// Create the directory for the profiles
-	        	new File(profilePath).mkdirs();
-	
-	        	// Copy shared preference file on the SD card
-	        	copyFile(new File(sharedPrefsPath + sharedPrefsFile + ".xml"), new File(profilePath + getProfileNameString()));
-	        } catch (Exception e) {
-	            Toast.makeText(this, getString(R.string.settings_profile_export_error), Toast.LENGTH_SHORT).show();
-	        }
-    }
+   
 
 	private OnClickListener profileOnClick = new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichItem) {
@@ -447,23 +394,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
    			}
 		}
 	};
-
-	private OnClickListener deleteOkButtonClick = new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-        	File profile = new File(profilePath + profileFiles[profileToDelete]);
-        	boolean rv = false;
-        	// Check if the file exists and try to delete it
-        	if (profile.exists()) {
-        		rv = profile.delete();
-        	}
-        	if (rv) {
-        		Toast.makeText(context, getString(R.string.settings_profile_delete_confirmation), Toast.LENGTH_SHORT).show();
-        	} else {
-        		Toast.makeText(context, getString(R.string.settings_profile_delete_error), Toast.LENGTH_SHORT).show();
-        	}
-		}
-	};
-
+ 
     public void copyFile(File in, File out) throws Exception {
         FileInputStream  fis = new FileInputStream(in);
         FileOutputStream fos = new FileOutputStream(out);
