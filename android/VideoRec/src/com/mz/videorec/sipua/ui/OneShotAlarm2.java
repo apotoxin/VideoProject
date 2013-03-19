@@ -20,10 +20,6 @@ package com.mz.videorec.sipua.ui;
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
- 
-
-import com.mz.videorec.sipua.SipdroidEngine;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,17 +28,23 @@ import android.util.Log;
 
 public class OneShotAlarm2 extends BroadcastReceiver {
 
-    @Override
+	@Override
 	public void onReceive(Context context, Intent intent) {
-    	if (!Sipdroid.release) Log.i("SipUA:","alarm2");
- 
-			if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_WLAN+(i!=0?i:""), Settings.DEFAULT_WLAN) ||
-	        		PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_3G+(i!=0?i:""), Settings.DEFAULT_3G) ||
-	        		PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_VPN+(i!=0?i:""), Settings.DEFAULT_VPN) ||
-	        		PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_EDGE+(i!=0?i:""), Settings.DEFAULT_EDGE)) {
-	        	context.startService(new Intent(context,RegisterService.class));
-	        	return;
-	        
-        context.stopService(new Intent(context,RegisterService.class));
-    }
+		if (!Sipdroid.release)
+			Log.i("SipUA:", "alarm2");
+
+		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				Settings.PREF_WLAN, Settings.DEFAULT_WLAN)
+				|| PreferenceManager.getDefaultSharedPreferences(context)
+						.getBoolean(Settings.PREF_3G, Settings.DEFAULT_3G)
+				|| PreferenceManager.getDefaultSharedPreferences(context)
+						.getBoolean(Settings.PREF_VPN, Settings.DEFAULT_VPN)
+				|| PreferenceManager.getDefaultSharedPreferences(context)
+						.getBoolean(Settings.PREF_EDGE, Settings.DEFAULT_EDGE)) {
+			context.startService(new Intent(context, RegisterService.class));
+			return;
+		} else {
+			context.stopService(new Intent(context, RegisterService.class));
+		}
+	}
 }
