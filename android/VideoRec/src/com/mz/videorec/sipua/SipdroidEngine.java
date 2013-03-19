@@ -404,8 +404,8 @@ public class SipdroidEngine implements RegisterAgentListener {
 		Receiver.onText(Receiver.REGISTER_NOTIFICATION, null, 0, 0);
 		if (ra != null)
 			ra.halt();
-		if (uas != null)
-			uas.hangup();
+		if (ua != null)
+			ua.hangup();
 		if (sip_providers != null)
 			sip_providers.halt();
 
@@ -454,11 +454,9 @@ public class SipdroidEngine implements RegisterAgentListener {
 			NameAddress target, NameAddress contact, String result) {
 		boolean retry = false;
 		int i = 0;
-		for (RegisterAgent ra : ras) {
-			if (ra == reg_ra)
-				return;
-			i++;
-		}
+		RegisterAgent ra = ras;
+		if (ra == reg_ra)
+			return;
 		if (isRegistered()) {
 			reg_ra.CurrentState = RegisterAgent.UNREGISTERED;
 			Receiver.onText(Receiver.REGISTER_NOTIFICATION, null, 0, 0);
@@ -516,18 +514,17 @@ public class SipdroidEngine implements RegisterAgentListener {
 	public void updateDNS() {
 		Editor edit = PreferenceManager.getDefaultSharedPreferences(
 				getUIContext()).edit();
-  
+
 		SipProvider sip_provider = sip_providers;
 		try {
 			edit.putString(
-					Settings.PREF_DNS ,
+					Settings.PREF_DNS,
 					IpAddress.getByName(
 							PreferenceManager.getDefaultSharedPreferences(
 									getUIContext()).getString(
-									Settings.PREF_SERVER ,
-									"")).toString());
+									Settings.PREF_SERVER, "")).toString());
 		} catch (UnknownHostException e1) {
-		 
+
 		}
 		edit.commit();
 		setOutboundProxy(sip_provider);
@@ -649,6 +646,6 @@ public class SipdroidEngine implements RegisterAgentListener {
 	public void onMWIUpdate(RegisterAgent ra, boolean voicemail, int number,
 			String vmacc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

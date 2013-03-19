@@ -20,6 +20,8 @@
 package com.mz.videorec.codecs;
  
 
+import com.mz.videorec.sipua.ui.Receiver;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.ListPreference;
