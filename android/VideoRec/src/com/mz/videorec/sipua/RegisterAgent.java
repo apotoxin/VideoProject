@@ -51,6 +51,7 @@ import org.zoolu.tools.LogLevel;
 import org.zoolu.tools.Parser;
 
 import com.mz.videorec.sipua.ui.Receiver;
+import com.mz.videorec.sipua.ui.Settings;
 
 import android.preference.PreferenceManager;
 

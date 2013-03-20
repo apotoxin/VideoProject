@@ -28,6 +28,7 @@ import org.zoolu.sdp.MediaField;
 import org.zoolu.sdp.SessionDescriptor;
 import org.zoolu.sdp.AttributeField;
 
+import com.mz.videorec.R;
 import com.mz.videorec.sipua.ui.Receiver;
 import com.mz.videorec.sipua.ui.Settings;
 
@@ -298,91 +299,5 @@ public class Codecs {
 		} else
 			/*formats of other protocols not supported yet*/
 			return null;
-	}
-
-	public static class CodecSettings extends PreferenceActivity {
-
-		private static final int MENU_UP = 0;
-		private static final int MENU_DOWN = 1;
-
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-
-			addPreferencesFromResource(R.xml.codec_settings);
-
-			// for long-press gesture on a profile preference
-			registerForContextMenu(getListView());
-
-			addPreferences(getPreferenceScreen());
-		}
-
-		@Override
-		public void onCreateContextMenu(ContextMenu menu, View v,
-						ContextMenuInfo menuInfo) {
-			super.onCreateContextMenu(menu, v, menuInfo);
-
-			menu.setHeaderTitle(R.string.codecs_move);
-			menu.add(Menu.NONE, MENU_UP, 0,
-				 R.string.codecs_move_up);
-			menu.add(Menu.NONE, MENU_DOWN, 0,
-				 R.string.codecs_move_down);
-		}
-
-		@Override
-		public boolean onContextItemSelected(MenuItem item) {
-
-			int posn = (int)((AdapterContextMenuInfo)item.getMenuInfo()).position;
-			Codec c = codecs.elementAt(posn);
-			if (item.getItemId() == MENU_UP) {
-				if (posn == 0)
-					return super.onContextItemSelected(item);
-				Codec tmp = codecs.elementAt(posn - 1);
-				codecs.set(posn - 1, c);
-				codecs.set(posn, tmp);
-			} else if (item.getItemId() == MENU_DOWN) {
-				if (posn == codecs.size() - 1)
-					return super.onContextItemSelected(item);
-				Codec tmp = codecs.elementAt(posn + 1);
-				codecs.set(posn + 1, c);
-				codecs.set(posn, tmp);
-			}
-			PreferenceScreen ps = getPreferenceScreen();
-			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(Receiver.mContext);
-			String v = "";
-			SharedPreferences.Editor e = sp.edit();
-
-			for (Codec d : codecs)
-				v = v + d.number() + " ";
-			e.putString(Settings.PREF_CODECS, v);
-			e.commit();
-			ps.removeAll();
-			addPreferences(ps);
-			return super.onContextItemSelected(item);
-		}
-
-		@Override
-		public boolean onPreferenceTreeClick(PreferenceScreen ps, Preference p) {
-			ListPreference l = (ListPreference) p;
-			for (Codec c : codecs)
-				if (c.key().equals(l.getKey())) {
-					c.init();
-					if (!c.isLoaded()) {
-						l.setValue("never");
-						c.fail();
-						l.setEnabled(false);
-						l.setSummary(l.getEntry());
-						if (l.getDialog() != null)
-							l.getDialog().dismiss();
-					}
-				}
-			return super.onPreferenceTreeClick(ps,p);
-		}
-		
-		@Override
-		public void onDestroy() {
-			super.onDestroy();
-			unregisterForContextMenu(getListView());
-		}
 	}
 }

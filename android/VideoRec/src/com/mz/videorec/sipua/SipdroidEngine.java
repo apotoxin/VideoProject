@@ -30,6 +30,7 @@ import org.zoolu.sip.address.NameAddress;
 import org.zoolu.sip.provider.SipProvider;
 import org.zoolu.sip.provider.SipStack;
 
+import com.mz.videorec.R;
 import com.mz.videorec.net.KeepAliveSip;
 import com.mz.videorec.sipua.ui.ChangeAccount;
 import com.mz.videorec.sipua.ui.LoopAlarm;

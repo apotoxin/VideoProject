@@ -25,8 +25,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.sipdroid.media.RtpStreamReceiver;
-import org.sipdroid.sipua.UserAgent;
+import com.mz.videorec.media.RtpStreamReceiver;
+import com.mz.videorec.sipua.UserAgent;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -63,19 +63,12 @@ public class Caller extends BroadcastReceiver {
     			boolean sip_type = !PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_PREF, Settings.DEFAULT_PREF).equals(Settings.VAL_PREF_PSTN);
     	        boolean ask = PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_PREF, Settings.DEFAULT_PREF).equals(Settings.VAL_PREF_ASK);
     	        
-      	        if (Receiver.call_state != UserAgent.UA_STATE_IDLE && RtpStreamReceiver.isBluetoothAvailable()) {
+      	        if (Receiver.call_state != UserAgent.UA_STATE_IDLE ) {
        	        	setResultData(null);
        	        	switch (Receiver.call_state) {
     	        	case UserAgent.UA_STATE_INCOMING_CALL:
     	        		Receiver.engine(context).answercall();
-    	        		if (RtpStreamReceiver.bluetoothmode)
-    	        			break;
     	        	default:
-    	        		if (RtpStreamReceiver.bluetoothmode)
-    	        			Receiver.engine(context).rejectcall();
-    	        		else
-    	        			Receiver.engine(context).togglebluetooth();
-    	        		break;	
        	        	}
        	        	return;
       	        }

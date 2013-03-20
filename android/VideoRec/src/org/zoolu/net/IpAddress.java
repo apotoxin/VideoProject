@@ -30,14 +30,12 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-import org.sipdroid.sipua.ui.Receiver;
-import org.sipdroid.sipua.ui.Settings;
-import org.sipdroid.sipua.ui.Sipdroid;
-
 import android.preference.PreferenceManager;
 import android.content.Context;
 
 import com.jstun.demo.DiscoveryTest;
+import com.mz.videorec.sipua.ui.Receiver;
+import com.mz.videorec.sipua.ui.Settings;
 
 /**
  * IpAddress is an IP address.

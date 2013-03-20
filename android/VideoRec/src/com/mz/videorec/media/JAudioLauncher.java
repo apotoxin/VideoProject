@@ -17,15 +17,16 @@
  * along with this source code; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package org.sipdroid.media;
+package com.mz.videorec.media;
 
-import org.sipdroid.codecs.Codecs;
-import org.sipdroid.net.SipdroidSocket;
-import org.sipdroid.sipua.ui.Receiver;
-import org.sipdroid.sipua.ui.Sipdroid;
+
 import org.zoolu.sip.provider.SipStack;
 import org.zoolu.tools.Log;
 import org.zoolu.tools.LogLevel;
+
+import com.mz.videorec.codecs.Codecs;
+import com.mz.videorec.net.SipdroidSocket;
+import com.mz.videorec.sipua.ui.Receiver;
 
 import android.preference.PreferenceManager;
 
@@ -83,8 +84,8 @@ public class JAudioLauncher implements MediaLauncher
       try
       {
     	 CallRecorder call_recorder = null;
-    	 if (PreferenceManager.getDefaultSharedPreferences(Receiver.mContext).getBoolean(org.sipdroid.sipua.ui.Settings.PREF_CALLRECORD,
-					org.sipdroid.sipua.ui.Settings.DEFAULT_CALLRECORD))
+    	 if (PreferenceManager.getDefaultSharedPreferences(Receiver.mContext).getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_CALLRECORD,
+    			 com.mz.videorec.sipua.ui.Settings.DEFAULT_CALLRECORD))
     		 call_recorder = new CallRecorder(null,payload_type.codec.samp_rate()); // Autogenerate filename from date. 
     	 socket=new SipdroidSocket(local_port);
          dir=direction;
@@ -152,12 +153,6 @@ public class JAudioLauncher implements MediaLauncher
 	   return 0;
    }
 
-   public void bluetoothMedia()
-   {
-	   if (receiver != null)
-		   receiver.bluetooth();
-   }
-
    //change DTMF
 	/** Send outband DTMF packets **/
   public boolean sendDTMF(char c){
@@ -176,7 +171,6 @@ public class JAudioLauncher implements MediaLauncher
    /** Adds a new string to the default Log */
    private void printLog(String str, int level)
    {
-	  if (Sipdroid.release) return;
 	  if (log!=null) log.println("AudioLauncher: "+str,level+SipStack.LOG_LEVEL_UA);  
       if (level<=LogLevel.HIGH) System.out.println("AudioLauncher: "+str);
    }
@@ -184,7 +178,6 @@ public class JAudioLauncher implements MediaLauncher
    /** Adds the Exception message to the default Log */
    void printException(Exception e,int level)
    { 
-	  if (Sipdroid.release) return;
 	  if (log!=null) log.printException(e,level+SipStack.LOG_LEVEL_UA);
       if (level<=LogLevel.HIGH) e.printStackTrace();
    }

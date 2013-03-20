@@ -17,7 +17,7 @@
  * along with this source code; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package org.sipdroid.media;
+package com.mz.videorec.media;
 
 /** Interface for classes that start media application such as for audio or video */
 public interface MediaLauncher {
@@ -28,8 +28,6 @@ public interface MediaLauncher {
 	public boolean stopMedia();
 	
 	public boolean muteMedia();
+	
 	public int speakerMedia(int mode);
-	public void bluetoothMedia();
-
-	public boolean sendDTMF(char c);
 }

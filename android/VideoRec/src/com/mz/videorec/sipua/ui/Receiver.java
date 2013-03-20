@@ -64,11 +64,12 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
- 
+
 import com.mz.videorec.sipua.ui.InCallScreen;
 import org.zoolu.sip.provider.SipProvider;
 
 import com.mz.videorec.media.RtpStreamReceiver;
+import com.mz.videorec.media.RtpStreamSender;
 import com.mz.videorec.sipua.SipdroidEngine;
 import com.mz.videorec.sipua.UserAgent;
 import com.mz.videorec.sipua.phone.Call;
@@ -107,7 +108,7 @@ public class Receiver extends BroadcastReceiver {
 
 	final static long[] vibratePattern = { 0, 1000, 1000 };
 
-	public static int docked = -1, headset = -1, bluetooth = -1;
+	public static int docked = -1, headset = -1;
 	public static SipdroidEngine mSipdroidEngine;
 
 	public static Context mContext;
@@ -167,7 +168,6 @@ public class Receiver extends BroadcastReceiver {
 				enable_wifi(true);
 				RtpStreamReceiver.good = RtpStreamReceiver.lost = RtpStreamReceiver.loss = RtpStreamReceiver.late = 0;
 				RtpStreamReceiver.speakermode = speakermode();
-				bluetooth = -1;
 				String text = caller.toString();
 				if (text.indexOf("<sip:") >= 0 && text.indexOf("@") >= 0)
 					text = text.substring(text.indexOf("<sip:") + 5,
@@ -195,10 +195,11 @@ public class Receiver extends BroadcastReceiver {
 					v = (Vibrator) mContext
 							.getSystemService(Context.VIBRATOR_SERVICE);
 				if ((pstn_state == null || pstn_state.equals("IDLE"))
-						&& PreferenceManager.getDefaultSharedPreferences(
-								mContext).getBoolean(
-								 com.mz.videorec.sipua.ui.Settings.PREF_AUTO_ON,
-								 com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_ON)
+						&& PreferenceManager
+								.getDefaultSharedPreferences(mContext)
+								.getBoolean(
+										com.mz.videorec.sipua.ui.Settings.PREF_AUTO_ON,
+										com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_ON)
 						&& !mKeyguardManager.inKeyguardRestrictedInputMode())
 					v.vibrate(vibratePattern, 1);
 				else {
@@ -234,7 +235,6 @@ public class Receiver extends BroadcastReceiver {
 			case UserAgent.UA_STATE_OUTGOING_CALL:
 				RtpStreamReceiver.good = RtpStreamReceiver.lost = RtpStreamReceiver.loss = RtpStreamReceiver.late = 0;
 				RtpStreamReceiver.speakermode = speakermode();
-				bluetooth = -1;
 				onText(MISSED_CALL_NOTIFICATION, null, 0, 0);
 				engine(mContext).register();
 				broadcastCallStateChanged("OFFHOOK", caller);
@@ -293,8 +293,7 @@ public class Receiver extends BroadcastReceiver {
 	static int cache_res;
 
 	public static void onText(int type, String text, int mInCallResId, long base) {
-		if (mSipdroidEngine != null
-				&& type == REGISTER_NOTIFICATION + mSipdroidEngine.pref) {
+		if (mSipdroidEngine != null && type == REGISTER_NOTIFICATION) {
 			cache_text = text;
 			cache_res = mInCallResId;
 		}
@@ -335,15 +334,11 @@ public class Receiver extends BroadcastReceiver {
 					notification.ledOnMS = 125;
 					notification.ledOffMS = 2875;
 					break;
-				case AUTO_ANSWER_NOTIFICATION:
-					notification.contentIntent = PendingIntent.getActivity(
-							mContext, 0, createIntent(AutoAnswer.class), 0);
-					break;
 				default:
 					if (type >= REGISTER_NOTIFICATION
 							&& mSipdroidEngine != null
 							&& type != REGISTER_NOTIFICATION
-									+ mSipdroidEngine.pref
+
 							&& mInCallResId == R.drawable.sym_presence_available)
 						notification.contentIntent = PendingIntent.getActivity(
 								mContext, 0, createIntent(ChangeAccount.class),
@@ -368,7 +363,8 @@ public class Receiver extends BroadcastReceiver {
 					contentView.setChronometer(R.id.text1, base,
 							text + " (%s)", true);
 				} else if (type >= REGISTER_NOTIFICATION) {
-					if (PreferenceManager.getDefaultSharedPreferences(mContext)
+					if (PreferenceManager
+							.getDefaultSharedPreferences(mContext)
 							.getBoolean(
 									com.mz.videorec.sipua.ui.Settings.PREF_POS,
 									com.mz.videorec.sipua.ui.Settings.DEFAULT_POS))
@@ -380,11 +376,9 @@ public class Receiver extends BroadcastReceiver {
 						contentView
 								.setTextViewText(
 										R.id.text1,
-										mSipdroidEngine.user_profiles[type
-												- REGISTER_NOTIFICATION].username
+										mSipdroidEngine.user_profile.username
 												+ "@"
-												+ mSipdroidEngine.user_profiles[type
-														- REGISTER_NOTIFICATION].realm_orig);
+												+ mSipdroidEngine.user_profile.realm_orig);
 				} else
 					contentView.setTextViewText(R.id.text1, text);
 				notification.contentView = contentView;
@@ -393,50 +387,9 @@ public class Receiver extends BroadcastReceiver {
 		} else {
 			mNotificationMgr.cancel(type);
 		}
-		if (type != AUTO_ANSWER_NOTIFICATION)
-			updateAutoAnswer();
 		if (mSipdroidEngine != null && type >= REGISTER_NOTIFICATION
-				&& type != REGISTER_NOTIFICATION + mSipdroidEngine.pref)
-			onText(REGISTER_NOTIFICATION + mSipdroidEngine.pref, cache_text,
-					cache_res, 0);
-	}
-
-	static void updateAutoAnswer() {
-		if (PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(
-				com.mz.videorec.sipua.ui.Settings.PREF_AUTO_ONDEMAND,
-				com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_ONDEMAND)
-				&& Sipdroid.on(mContext)) {
-			if (PreferenceManager.getDefaultSharedPreferences(mContext)
-					.getBoolean(
-							com.mz.videorec.sipua.ui.Settings.PREF_AUTO_DEMAND,
-							com.mz.videorec.sipua.ui.Settings.DEFAULT_AUTO_DEMAND))
-				updateAutoAnswer(1);
-			else
-				updateAutoAnswer(0);
-		} else
-			updateAutoAnswer(-1);
-	}
-
-	private static int autoAnswerState = -1;
-
-	static void updateAutoAnswer(int status) {
-		if (status != autoAnswerState) {
-			switch (autoAnswerState = status) {
-			case 0:
-				Receiver.onText(Receiver.AUTO_ANSWER_NOTIFICATION,
-						mContext.getString(R.string.auto_disabled),
-						R.drawable.auto_answer_disabled, 0);
-				break;
-			case 1:
-				Receiver.onText(Receiver.AUTO_ANSWER_NOTIFICATION,
-						mContext.getString(R.string.auto_enabled),
-						R.drawable.auto_answer, 0);
-				break;
-			case -1:
-				Receiver.onText(Receiver.AUTO_ANSWER_NOTIFICATION, null, 0, 0);
-				break;
-			}
-		}
+				&& type != REGISTER_NOTIFICATION)
+			onText(REGISTER_NOTIFICATION, cache_text, cache_res, 0);
 	}
 
 	public static void registered() {
@@ -462,7 +415,8 @@ public class Receiver extends BroadcastReceiver {
 		if (enable) {
 			if (call_state == UserAgent.UA_STATE_IDLE
 					&& Sipdroid.on(mContext)
-					&& PreferenceManager.getDefaultSharedPreferences(mContext)
+					&& PreferenceManager
+							.getDefaultSharedPreferences(mContext)
 							.getBoolean(
 									com.mz.videorec.sipua.ui.Settings.PREF_POS,
 									com.mz.videorec.sipua.ui.Settings.DEFAULT_POS)
@@ -709,11 +663,6 @@ public class Receiver extends BroadcastReceiver {
 					mContext.getString(R.string.menu_speaker),
 					android.R.drawable.stat_sys_speakerphone,
 					Receiver.ccCall.base);
-		else if (bluetooth > 0)
-			Receiver.onText(Receiver.CALL_NOTIFICATION,
-					mContext.getString(R.string.menu_bluetooth),
-					R.drawable.stat_sys_phone_call_bluetooth,
-					Receiver.ccCall.base);
 		else
 			Receiver.onText(Receiver.CALL_NOTIFICATION,
 					mContext.getString(R.string.card_title_in_progress),
@@ -721,20 +670,6 @@ public class Receiver extends BroadcastReceiver {
 	}
 
 	public static boolean on_wlan;
-
-	static boolean on_vpn() {
-		return PreferenceManager.getDefaultSharedPreferences(mContext)
-				.getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_ON_VPN,
-						com.mz.videorec.sipua.ui.Settings.DEFAULT_ON_VPN);
-	}
-
-	static void on_vpn(boolean enable) {
-		Editor edit = PreferenceManager.getDefaultSharedPreferences(
-				Receiver.mContext).edit();
-
-		edit.putBoolean(com.mz.videorec.sipua.ui.Settings.PREF_ON_VPN, enable);
-		edit.commit();
-	}
 
 	public static boolean isFast() {
 		WifiManager wm = (WifiManager) mContext
@@ -744,8 +679,8 @@ public class Receiver extends BroadcastReceiver {
 		if (PreferenceManager
 				.getDefaultSharedPreferences(mContext)
 				.getString(
-							com.mz.videorec.sipua.ui.Settings.PREF_USERNAME
-								+ (""), "").equals("")
+						com.mz.videorec.sipua.ui.Settings.PREF_USERNAME + (""),
+						"").equals("")
 				|| PreferenceManager
 						.getDefaultSharedPreferences(mContext)
 						.getString(
@@ -763,18 +698,13 @@ public class Receiver extends BroadcastReceiver {
 					&& (WifiInfo.getDetailedStateOf(wi.getSupplicantState()) == DetailedState.OBTAINING_IPADDR || WifiInfo
 							.getDetailedStateOf(wi.getSupplicantState()) == DetailedState.CONNECTED)) {
 				on_wlan = true;
-				if (!on_vpn())
-					return PreferenceManager.getDefaultSharedPreferences(
-							mContext).getBoolean(
-									com.mz.videorec.sipua.ui.Settings.PREF_WLAN
-									+ (""),
-									com.mz.videorec.sipua.ui.Settings.DEFAULT_WLAN);
-				else
-					return PreferenceManager.getDefaultSharedPreferences(
-							mContext).getBoolean(
-									com.mz.videorec.sipua.ui.Settings.PREF_VPN
-									+ (""),
-									com.mz.videorec.sipua.ui.Settings.DEFAULT_VPN);
+
+				return PreferenceManager.getDefaultSharedPreferences(mContext)
+						.getBoolean(
+								com.mz.videorec.sipua.ui.Settings.PREF_WLAN
+										+ (""),
+								com.mz.videorec.sipua.ui.Settings.DEFAULT_WLAN);
+
 			}
 		}
 		on_wlan = false;
@@ -787,24 +717,13 @@ public class Receiver extends BroadcastReceiver {
 
 		if (Sipdroid.market)
 			return false;
-		if (on_vpn()
-				&& (tm.getNetworkType() >= TelephonyManager.NETWORK_TYPE_EDGE))
-			return PreferenceManager.getDefaultSharedPreferences(mContext)
-					.getBoolean(
-							com.mz.videorec.sipua.ui.Settings.PREF_VPN
-									+ (i != 0 ? i : ""),
-									com.mz.videorec.sipua.ui.Settings.DEFAULT_VPN);
 		if (tm.getNetworkType() >= TelephonyManager.NETWORK_TYPE_UMTS)
 			return PreferenceManager.getDefaultSharedPreferences(mContext)
-					.getBoolean(
-							com.mz.videorec.sipua.ui.Settings.PREF_3G
-									+ (i != 0 ? i : ""),
+					.getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_3G,
 							com.mz.videorec.sipua.ui.Settings.DEFAULT_3G);
 		if (tm.getNetworkType() == TelephonyManager.NETWORK_TYPE_EDGE)
 			return PreferenceManager.getDefaultSharedPreferences(mContext)
-					.getBoolean(
-							com.mz.videorec.sipua.ui.Settings.PREF_EDGE
-									+ (i != 0 ? i : ""),
+					.getBoolean(com.mz.videorec.sipua.ui.Settings.PREF_EDGE,
 							com.mz.videorec.sipua.ui.Settings.DEFAULT_EDGE);
 		return false;
 	}
@@ -852,7 +771,6 @@ public class Receiver extends BroadcastReceiver {
 		if (mContext == null)
 			mContext = context;
 		if (intentAction.equals(Intent.ACTION_BOOT_COMPLETED)) {
-			on_vpn(false);
 			engine(context).register();
 		} else if (intentAction.equals(ConnectivityManager.CONNECTIVITY_ACTION)
 				|| intentAction.equals(ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
@@ -860,17 +778,6 @@ public class Receiver extends BroadcastReceiver {
 						.equals(ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE)
 				|| intentAction.equals(Intent.ACTION_PACKAGE_REPLACED)) {
 			engine(context).register();
-		} else if (intentAction.equals(ACTION_VPN_CONNECTIVITY)
-				&& intent.hasExtra("connection_state")) {
-			String state = intent.getSerializableExtra("connection_state")
-					.toString();
-			if (state != null && on_vpn() != state.equals("CONNECTED")) {
-				on_vpn(state.equals("CONNECTED"));
-				for (SipProvider sip_provider : engine(context).sip_providers)
-					if (sip_provider != null)
-						sip_provider.haltConnections();
-				engine(context).register();
-			}
 		} else if (intentAction.equals(ACTION_DATA_STATE_CHANGED)) {
 			engine(context).registerMore();
 		} else if (intentAction.equals(ACTION_PHONE_STATE_CHANGED)
@@ -895,7 +802,6 @@ public class Receiver extends BroadcastReceiver {
 			if (call_state == UserAgent.UA_STATE_INCALL)
 				engine(mContext).speaker(speakermode());
 		} else if (intentAction.equals(ACTION_SCO_AUDIO_STATE_CHANGED)) {
-			bluetooth = intent.getIntExtra(EXTRA_SCO_AUDIO_STATE, -1);
 			progress();
 			RtpStreamSender.changed = true;
 		} else if (intentAction.equals(Intent.ACTION_HEADSET_PLUG)) {
@@ -917,12 +823,13 @@ public class Receiver extends BroadcastReceiver {
 				alarm(2 * 60, OwnWifi.class);
 			else
 				alarm(15 * 60, OwnWifi.class);
-			if (SipdroidEngine.pwl != null)
-				for (PowerManager.WakeLock pwl : SipdroidEngine.pwl)
-					if (pwl != null && pwl.isHeld()) {
-						pwl.release();
-						pwl.acquire();
-					}
+			if (SipdroidEngine.pwl != null) {
+				PowerManager.WakeLock pwl = SipdroidEngine.pwl;
+				if (pwl != null && pwl.isHeld()) {
+					pwl.release();
+					pwl.acquire();
+				}
+			}
 		} else if (intentAction.equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {
 			mHandler.sendEmptyMessageDelayed(MSG_SCAN, 3000);
 		} else if (intentAction

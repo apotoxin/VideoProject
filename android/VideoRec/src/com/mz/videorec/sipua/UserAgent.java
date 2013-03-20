@@ -44,8 +44,14 @@ import org.zoolu.tools.Log;
 import org.zoolu.tools.LogLevel;
 import org.zoolu.tools.Parser;
 
+import com.mz.videorec.R;
 import com.mz.videorec.codecs.Codec;
 import com.mz.videorec.codecs.Codecs;
+import com.mz.videorec.media.JAudioLauncher;
+import com.mz.videorec.media.MediaLauncher;
+import com.mz.videorec.media.RtpStreamReceiver;
+import com.mz.videorec.sipua.ui.Receiver;
+import com.mz.videorec.sipua.ui.Settings;
 
 /**
  * Simple SIP user agent (UA). It includes audio/video applications.
@@ -84,6 +90,7 @@ public class UserAgent extends CallListenerAdapter {
 
 	int call_state = UA_STATE_IDLE;
 	String remote_media_address;
+	
 	int remote_video_port,local_video_port;
 
 	// *************************** Basic methods ***************************
@@ -324,7 +331,7 @@ public class UserAgent extends CallListenerAdapter {
 
 	public void info(char c, int duration)
 	{
-		boolean use2833 = audio_app != null && audio_app.sendDTMF(c); // send out-band DTMF (rfc2833) if supported
+		boolean use2833 = audio_app != null; // send out-band DTMF (rfc2833) if supported
 
 		if (!use2833 && call != null)
 			call.info(c, duration);
@@ -493,11 +500,6 @@ public class UserAgent extends CallListenerAdapter {
 		return old;
 	}
 
-	public void bluetoothMediaApplication() {
-		if (audio_app != null)
-			audio_app.bluetoothMedia();
-	}
-
 	private void createOffer() {
 		initSessionDescriptor(null);
 	}
@@ -539,12 +541,10 @@ public class UserAgent extends CallListenerAdapter {
 			return;
 		}
 		printLog("INCOMING", LogLevel.HIGH);
-		int i = 0;
-		for (UserAgent ua : Receiver.mSipdroidEngine.uas) {
-			if (ua == this) break;
-			i++;
-		}
-		if (Receiver.call_state != UA_STATE_IDLE || !Receiver.isFast(i)) {
+
+		UserAgent ua = Receiver.mSipdroidEngine.ua;
+			
+		if (Receiver.call_state != UA_STATE_IDLE || !Receiver.isFast()) {
 			call.busy();
 			listen();
 			return;
@@ -997,7 +997,6 @@ public class UserAgent extends CallListenerAdapter {
 
 	/** Adds a new string to the default Log */
 	void printLog(String str, int level) {
-		if (Sipdroid.release) return;
 		if (log != null)
 			log.println("UA: " + str, level + SipStack.LOG_LEVEL_UA);
 		if ((user_profile == null || !user_profile.no_prompt)
@@ -1007,7 +1006,6 @@ public class UserAgent extends CallListenerAdapter {
 
 	/** Adds the Exception message to the default Log */
 	void printException(Exception e, int level) {
-		if (Sipdroid.release) return;
 		if (log != null)
 			log.printException(e, level + SipStack.LOG_LEVEL_UA);
 	}

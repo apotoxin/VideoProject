@@ -1,6 +1,8 @@
 package com.mz.videorec.sipua.phone;
  
 
+import com.mz.videorec.sipua.ui.Receiver;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
