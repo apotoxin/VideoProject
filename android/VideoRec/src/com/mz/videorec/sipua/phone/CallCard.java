@@ -27,6 +27,9 @@ package com.mz.videorec.sipua.phone;
 //import com.android.internal.telephony.Connection;
 //import com.android.internal.telephony.Phone;
 
+import com.mz.videorec.R;
+import com.mz.videorec.sipua.ui.Receiver;
+
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -46,8 +49,7 @@ import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.sipdroid.sipua.*;
-import org.sipdroid.sipua.ui.Receiver;
+ 
 
 /**
  * "Call card" UI element: the in-call screen contains a tiled layout of call

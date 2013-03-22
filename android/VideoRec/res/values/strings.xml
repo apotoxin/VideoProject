@@ -31,21 +31,7 @@
 <string name="pstn_name">Phone Call</string>
 <string name="sip_name">Sipdroid Call, when available</string>
 
-<string name="about">Sipdroid is an open-source SIP client for Android
-\n
-\nSee http://sipdroid.org for more info
-\n
-\nVersion ${VERSION}
-\nThe software has been released for testing.
-\n
-\nCopyright (C) 2009 The Sipdroid Open Source Project (http://sipdroid.org)
-\nCopyright (C) 2008 Hughes Systique Corporation, USA (http://hsc.com)
-\nCopyright (C) 2006 The Android Open Source Project (http://android.com)
-\nCopyright (C) 2005 Luca Veltri - University of Parma - Italy (http://mjsip.org)
-\n
-\nThis program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
-\n
-\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details (http://www.gnu.org/licenses).</string>
+<string name="about">Sipdroid is an open-source SIP client for Android</string>
 
 <string name="reg">Registering...</string>
 <string name="regpref">Preferred</string>
@@ -245,13 +231,13 @@
 
 <string name="settings_title">Sipdroid settings</string>
 
-<string name="settings_profile_title">Sipdroid Settings (<xliff:g id="profile">%s</xliff:g>)</string>
+<string name="settings_profile_title">Sipdroid Setting</string>
 <string name="settings_profile_menu_import">Import</string>
 <string name="settings_profile_menu_export">Export</string>
 <string name="settings_profile_menu_delete">Delete</string>
 <string name="settings_profile_dialog_profiles_title">Profiles</string>
 <string name="settings_profile_dialog_delete_title">Delete profile</string>
-<string name="settings_profile_dialog_delete_text">Do you really want to delete <xliff:g id="profile">%s</xliff:g> profile?</string>
+<string name="settings_profile_dialog_delete_text">Do you really want to delete ?</string>
 <string name="settings_profile_export_error">Can not export settings!</string>
 <string name="settings_profile_import_error">Can not import settings!</string>
 <string name="settings_profile_delete_error">Can not delete this profile!</string>
@@ -304,5 +290,6 @@
 
 <string name="help_speakerphone">Press and hold volume buttons to force talk</string>
 <string name="menu_create">New PBX linked to my Google Voice</string>
+<string name="action_settings">设置</string>
 
 </resources>

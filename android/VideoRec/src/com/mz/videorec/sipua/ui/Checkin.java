@@ -41,9 +41,9 @@ public class Checkin {
 							if (lines[0].equals("createButton"))
 								createButton = Integer.valueOf(lines[1]);
 							else {
-								int i = 0;
-								for (UserAgentProfile user_profile : Receiver.engine(Receiver.mContext).user_profiles) {
-									if (PreferenceManager.getDefaultSharedPreferences(Receiver.mContext).getString(Settings.PREF_DNS+i, Settings.DEFAULT_DNS).equals(lines[0]) ||
+								 
+								 UserAgentProfile user_profile = Receiver.engine(Receiver.mContext).user_profile ; 
+									if (PreferenceManager.getDefaultSharedPreferences(Receiver.mContext).getString(Settings.PREF_DNS, Settings.DEFAULT_DNS).equals(lines[0]) ||
 											(user_profile != null && user_profile.realm != null &&
 													user_profile.realm.contains(lines[0]))) {
 										if (in_call) {
@@ -54,8 +54,7 @@ public class Checkin {
 										intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 										Receiver.mContext.startActivity(intent);
 									}
-									i++;
-								}
+									 
 							}
 						}
 					}

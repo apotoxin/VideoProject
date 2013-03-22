@@ -32,7 +32,6 @@ import org.zoolu.sip.provider.SipStack;
 
 import com.mz.videorec.R;
 import com.mz.videorec.net.KeepAliveSip;
-import com.mz.videorec.sipua.ui.ChangeAccount;
 import com.mz.videorec.sipua.ui.LoopAlarm;
 import com.mz.videorec.sipua.ui.Receiver;
 import com.mz.videorec.sipua.ui.Settings;
@@ -351,15 +350,14 @@ public class SipdroidEngine implements RegisterAgentListener {
 
 	public void registerUdp() {
 		IpAddress.setLocalIpAddress();
-		int i = 0;
+ 
 		RegisterAgent ra = ras;
 		try {
 			if (user_profile == null || user_profile.username.equals("")
 					|| user_profile.realm.equals("") || sip_providers == null
 					|| sip_providers.getDefaultTransport() == null
 					|| sip_providers.getDefaultTransport().equals("tcp")) {
-				i++;
-				continue;
+				 return ; 
 			}
 			user_profile.contact_url = getContactURL(user_profile.from_url,
 					sip_providers);
@@ -368,7 +366,7 @@ public class SipdroidEngine implements RegisterAgentListener {
 				unregister();
 			} else {
 				if (ra != null && ra.register()) {
-					Receiver.onText(Receiver.REGISTER_NOTIFICATION + i,
+					Receiver.onText(Receiver.REGISTER_NOTIFICATION,
 							getUIContext().getString(R.string.reg),
 							R.drawable.sym_presence_idle, 0);
 					wl.acquire();

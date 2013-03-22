@@ -64,17 +64,14 @@ public class CreateAccount extends Dialog {
 	static String email,trunkserver,trunkuser,trunkpassword,trunkport;
 	
 	public static String isPossible(Context context) {
-		Boolean found = false;
 		email = trunkserver = null;
 	   		String j = "" ; 
 	   		String username = PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_USERNAME+j, Settings.DEFAULT_USERNAME),
 	   			server = PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_SERVER+j, Settings.DEFAULT_SERVER);
 	   		if (username.equals("") || server.equals(""))
-	   			continue;
-	   		if (server.contains("pbxes"))
-	   			found = true;
-	   		else if (i == 0 &&
-	   				!PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_PROTOCOL+j, Settings.DEFAULT_PROTOCOL).equals("tcp") &&
+	   			return "" ; 
+
+	   		else if (!PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_PROTOCOL+j, Settings.DEFAULT_PROTOCOL).equals("tcp") &&
 	   				PreferenceManager.getDefaultSharedPreferences(context).getBoolean(Settings.PREF_3G+j, Settings.DEFAULT_3G) &&
 	   				Receiver.engine(context).isRegistered() &&
 	   				Receiver.engine(context).ras.CurrentState == RegisterAgent.REGISTERED) {
@@ -83,7 +80,6 @@ public class CreateAccount extends Dialog {
 	   			trunkpassword = PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_PASSWORD+j, Settings.DEFAULT_PASSWORD);
 	   			trunkport = PreferenceManager.getDefaultSharedPreferences(context).getString(Settings.PREF_PORT+j, Settings.DEFAULT_PORT);
 	   		}
-	   	if (found) return null;
         Account[] accounts = AccountManager.get(context).getAccountsByType("com.google");
         for (Account account : accounts) {
       	  email = account.name;

@@ -22,6 +22,7 @@ package com.mz.videorec.sipua.phone;
  */
  
 
+import com.mz.videorec.R;
 import com.mz.videorec.sipua.ui.InCallScreen;
 import com.mz.videorec.sipua.ui.Receiver;
 

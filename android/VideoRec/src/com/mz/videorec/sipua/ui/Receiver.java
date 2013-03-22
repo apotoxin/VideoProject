@@ -65,6 +65,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.mz.videorec.R;
 import com.mz.videorec.sipua.ui.InCallScreen;
 import org.zoolu.sip.provider.SipProvider;
 
@@ -339,10 +340,11 @@ public class Receiver extends BroadcastReceiver {
 							&& mSipdroidEngine != null
 							&& type != REGISTER_NOTIFICATION
 
-							&& mInCallResId == R.drawable.sym_presence_available)
-						notification.contentIntent = PendingIntent.getActivity(
-								mContext, 0, createIntent(ChangeAccount.class),
-								0);
+							&& mInCallResId == R.drawable.sym_presence_available) {
+//						notification.contentIntent = PendingIntent.getActivity(
+//								mContext, 0, createIntent(ChangeAccount.class),
+//								0);
+					}
 					else
 						notification.contentIntent = PendingIntent.getActivity(
 								mContext, 0, createIntent(Sipdroid.class), 0);

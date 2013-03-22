@@ -23,6 +23,7 @@ package com.mz.videorec.sipua.ui;
 import java.util.HashMap;
  
 
+import com.mz.videorec.R;
 import com.mz.videorec.media.RtpStreamReceiver;
 import com.mz.videorec.media.RtpStreamSender;
 import com.mz.videorec.sipua.UserAgent;
@@ -326,20 +327,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
         
         // Have the WindowManager filter out touch events that are "too fat".
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES);
-
-	    mDigits = (EditText) findViewById(R.id.digits);
-        mDisplayMap.put(R.id.one, '1');
-        mDisplayMap.put(R.id.two, '2');
-        mDisplayMap.put(R.id.three, '3');
-        mDisplayMap.put(R.id.four, '4');
-        mDisplayMap.put(R.id.five, '5');
-        mDisplayMap.put(R.id.six, '6');
-        mDisplayMap.put(R.id.seven, '7');
-        mDisplayMap.put(R.id.eight, '8');
-        mDisplayMap.put(R.id.nine, '9');
-        mDisplayMap.put(R.id.zero, '0');
-        mDisplayMap.put(R.id.pound, '#');
-        mDisplayMap.put(R.id.star, '*');
+ 
         
         mToneMap.put('1', ToneGenerator.TONE_DTMF_1);
         mToneMap.put('2', ToneGenerator.TONE_DTMF_2);
@@ -386,7 +374,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
     @Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		
+		 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.incall);
 		
@@ -402,7 +390,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
 	public void reject() {
 		if (Receiver.ccCall != null) {
 			Receiver.stopRingtone();
-			Receiver.ccCall.setState(Call.State.DISCONNECTED);
+			Receiver.ccCall.setState(com.mz.videorec.sipua.phone.Call.State.DISCONNECTED);
 			mCallCard.displayMainCallStatus(ccPhone,Receiver.ccCall);
 			mDialerDrawer.close();
 			mDialerDrawer.setVisibility(View.GONE);
@@ -423,7 +411,7 @@ public class InCallScreen extends CallScreen implements View.OnClickListener, Se
 			}
 		}).start();   
 		if (Receiver.ccCall != null) {
-			Receiver.ccCall.setState(Call.State.ACTIVE);
+			Receiver.ccCall.setState(com.mz.videorec.sipua.phone.Call.State.ACTIVE);
 			Receiver.ccCall.base = SystemClock.elapsedRealtime();
 			mCallCard.displayMainCallStatus(ccPhone,Receiver.ccCall);
 			mDialerDrawer.setVisibility(View.VISIBLE);

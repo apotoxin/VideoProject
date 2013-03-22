@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
+import com.mz.videorec.R;
 import com.mz.videorec.media.RtpStreamReceiver;
 import com.mz.videorec.media.RtpStreamSender;
 import com.mz.videorec.net.RtpPacket;
@@ -190,7 +191,7 @@ public class VideoCamera extends CallScreen implements
     public void onStart() {
         super.onStart();
         speakermode = Receiver.engine(this).speaker(AudioManager.MODE_NORMAL);
-        videoQualityHigh = PreferenceManager.getDefaultSharedPreferences(mContext).getString(org.sipdroid.sipua.ui.Settings.PREF_VQUALITY, org.sipdroid.sipua.ui.Settings.DEFAULT_VQUALITY).equals("high");
+        videoQualityHigh = PreferenceManager.getDefaultSharedPreferences(mContext).getString(com.mz.videorec.sipua.ui.Settings.PREF_VQUALITY, com.mz.videorec.sipua.ui.Settings.DEFAULT_VQUALITY).equals("high");
         if ((intent = getIntent()).hasExtra(MediaStore.EXTRA_VIDEO_QUALITY)) {
             int extraVideoQuality = intent.getIntExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
             videoQualityHigh = (extraVideoQuality > 0);

@@ -3,6 +3,7 @@ package com.mz.videorec.sipua.ui;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import com.mz.videorec.R;
 import com.mz.videorec.media.RtpStreamReceiver;
 import com.mz.videorec.net.RtpPacket;
 import com.mz.videorec.net.RtpSocket;
@@ -68,22 +69,22 @@ public class CallScreen extends Activity implements DialogInterface.OnClickListe
 	public boolean onCreateOptionsMenu(Menu menu) {
 		boolean result = super.onCreateOptionsMenu(menu);
 
-		MenuItem m = menu.add(0, HOLD_MENU_ITEM, 0, R.string.menu_hold);
-		m.setIcon(android.R.drawable.stat_sys_phone_call_on_hold);
-		m = menu.add(0, SPEAKER_MENU_ITEM, 0, R.string.menu_speaker);
-		m.setIcon(android.R.drawable.stat_sys_speakerphone);
-		m = menu.add(0, MUTE_MENU_ITEM, 0, R.string.menu_mute);
-		m.setIcon(android.R.drawable.stat_notify_call_mute);
-		m = menu.add(0, ANSWER_MENU_ITEM, 0, R.string.menu_answer);
-		m.setIcon(android.R.drawable.ic_menu_call);
-		m = menu.add(0, BLUETOOTH_MENU_ITEM, 0, R.string.menu_bluetooth);
-		m.setIcon(R.drawable.stat_sys_phone_call_bluetooth);
-		m = menu.add(0, TRANSFER_MENU_ITEM, 0, R.string.menu_transfer);
-		m.setIcon(android.R.drawable.ic_menu_call);			
-		m = menu.add(0, VIDEO_MENU_ITEM, 0, R.string.menu_video);
-		m.setIcon(android.R.drawable.ic_menu_camera);
-		m = menu.add(0, HANG_UP_MENU_ITEM, 0, R.string.menu_endCall);
-		m.setIcon(R.drawable.ic_menu_end_call);
+//		MenuItem m = menu.add(0, HOLD_MENU_ITEM, 0, R.string.menu_hold);
+//		m.setIcon(android.R.drawable.stat_sys_phone_call_on_hold);
+//		m = menu.add(0, SPEAKER_MENU_ITEM, 0, R.string.menu_speaker);
+//		m.setIcon(android.R.drawable.stat_sys_speakerphone);
+//		m = menu.add(0, MUTE_MENU_ITEM, 0, R.string.menu_mute);
+//		m.setIcon(android.R.drawable.stat_notify_call_mute);
+//		m = menu.add(0, ANSWER_MENU_ITEM, 0, R.string.menu_answer);
+//		m.setIcon(android.R.drawable.ic_menu_call);
+//		m = menu.add(0, BLUETOOTH_MENU_ITEM, 0, R.string.menu_bluetooth);
+//		m.setIcon(R.drawable.stat_sys_phone_call_bluetooth);
+//		m = menu.add(0, TRANSFER_MENU_ITEM, 0, R.string.menu_transfer);
+//		m.setIcon(android.R.drawable.ic_menu_call);			
+//		m = menu.add(0, VIDEO_MENU_ITEM, 0, R.string.menu_video);
+//		m.setIcon(android.R.drawable.ic_menu_camera);
+//		m = menu.add(0, HANG_UP_MENU_ITEM, 0, R.string.menu_endCall);
+//		m.setIcon(R.drawable.ic_menu_end_call);
 				
 		return result;
 	}
@@ -106,7 +107,7 @@ public class CallScreen extends Activity implements DialogInterface.OnClickListe
 			menu.findItem(TRANSFER_MENU_ITEM).setVisible(false);
 		
 		}
-		menu.findItem(SPEAKER_MENU_ITEM).setVisible(!(Receiver.headset > 0 || Receiver.docked > 0 || Receiver.bluetooth > 0));
+		menu.findItem(SPEAKER_MENU_ITEM).setVisible(!(Receiver.headset > 0));
 		menu.findItem(ANSWER_MENU_ITEM).setVisible(Receiver.call_state == UserAgent.UA_STATE_INCOMING_CALL);
 		
 		return result;
