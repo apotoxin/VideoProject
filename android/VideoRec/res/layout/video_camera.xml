@@ -18,10 +18,10 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal"> 
  
-    <org.sipdroid.sipua.ui.VideoPreview 
+    <com.mz.videorec.sipua.ui.VideoPreview 
             android:id="@+id/camera_preview"
-            android:layout_width="176px"
-            android:layout_height="144px"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
     /> 

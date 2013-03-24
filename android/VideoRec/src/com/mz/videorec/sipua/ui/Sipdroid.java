@@ -238,7 +238,7 @@ public class Sipdroid extends Activity implements OnDismissListener {
 		final Context mContext = this;
 		final OnDismissListener listener = this;
 
-		createButton = (Button) findViewById(R.id.create_button);
+	//	createButton = (Button) findViewById(R.id.create_button);
 		createButton.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
 				CreateAccount createDialog = new CreateAccount(mContext);

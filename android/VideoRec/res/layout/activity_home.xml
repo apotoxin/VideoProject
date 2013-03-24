@@ -15,24 +15,41 @@
         android:text="欢迎" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView1"
-        android:layout_below="@+id/textView1"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="96dp"
         android:text="摄像" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
         android:layout_alignParentRight="true"
         android:layout_marginRight="50dp"
         android:layout_marginTop="96dp"
         android:text="上传" />
+    
+     <Button
+        android:id="@+id/buttonAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/buttonVideo"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="55dp"
+        android:text="帐号" />
+     
+      <Button
+        android:id="@+id/buttonMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonUpload"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="55dp"
+        android:text="其他" />
+      
 
 </RelativeLayout>

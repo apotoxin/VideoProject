@@ -201,8 +201,7 @@ public class VideoCamera extends CallScreen implements
 	@Override
     public void onResume() {
 		if (!Sipdroid.release) Log.i("SipUA:","on resume");
-        justplay = intent.hasExtra("justplay");
-        if (!justplay) {
+        if (true) {
 			receiver = new LocalSocket();
 			try {
 				lss = new LocalServerSocket("Sipdroid");
@@ -335,7 +334,7 @@ public class VideoCamera extends CallScreen implements
 		}
 	}
 
-    boolean videoQualityHigh;
+    boolean videoQualityHigh = true;
     Camera mCamera;
     
     // initializeVideo() starts preview and prepare media recorder.
@@ -361,35 +360,13 @@ public class VideoCamera extends CallScreen implements
         	mCamera = null;
         }
 
-        if (useFront && Integer.parseInt(Build.VERSION.SDK) >= 5) {
-			if (isAvailableSprintFFC)
-			{
-				try
-				{
-					Method method = Class.forName("android.hardware.HtcFrontFacingCamera").getDeclaredMethod("getCamera", null);
-					mCamera = (Camera) method.invoke(null, null);
-				}
-				catch (Exception ex)
-				{
-					Log.d(TAG, ex.toString());
-				}
-			} else {
-				mCamera = Camera.open(); 
-				Camera.Parameters parameters = mCamera.getParameters(); 
-				parameters.set("camera-id", 2); 
-				mCamera.setParameters(parameters); 
-			}
-			VideoCameraNew.unlock(mCamera);
-			mMediaRecorder.setCamera(mCamera);
-	        mVideoPreview.setOnClickListener(this);
-        }
         mVideoPreview.setOnLongClickListener(this);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mMediaRecorder.setOutputFile(sender.getFileDescriptor());
 
         if (videoQualityHigh) {
-            mMediaRecorder.setVideoSize(352,288);
+            mMediaRecorder.setVideoSize(480,320);
         } else {
             mMediaRecorder.setVideoSize(176,144);
         }

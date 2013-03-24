@@ -53,59 +53,7 @@
 				android:title="@string/settings_vpn"
 				android:summary="@string/settings_vpn2" />
 	</PreferenceScreen>
-	<PreferenceScreen android:title="@string/settings_account"
-				android:key="account1">
-			<EditTextPreference
-				android:key="username1"
-				android:title="@string/settings_username"
-				android:singleLine="true" />
-			<EditTextPreference
-				android:key="password1"
-				android:title="@string/settings_password"
-				android:password="true"
-				android:singleLine="true" />
-			<EditTextPreference
-				android:key="server1"
-				android:title="@string/settings_server"
-				android:singleLine="true" />
-			<EditTextPreference
-				android:key="domain1"
-				android:title="@string/settings_domain"
-				android:summary="@string/settings_domain2"
-				android:singleLine="true" />
-			<EditTextPreference android:singleLine="true"
-				android:title="@string/settings_username1"
-				android:key="fromuser1"
-				android:summary="@string/settings_callerid2">
-			</EditTextPreference>
-			<ListPreference
-				android:key="port1"
-				android:title="@string/settings_port"
-				android:entries="@array/port_display_values"
-				android:entryValues="@array/port_values"
-				android:dialogTitle="@string/settings_port" />
-			<ListPreference
-				android:key="protocol1"
-				android:title="@string/settings_protocol"
-				android:entries="@array/protocol_display_values"
-				android:entryValues="@array/protocol_values"
-				android:dialogTitle="@string/settings_protocol" />
-			<CheckBoxPreference
-				android:key="wlan1"
-				android:title="@string/settings_wlan"/>
-			<CheckBoxPreference
-				android:key="3g1"
-				android:title="@string/settings_3g"
-				android:summary="@string/settings_check" />
-			<CheckBoxPreference
-				android:key="edge1"
-				android:title="@string/settings_edge"
-				android:summary="@string/settings_check" />
-			<CheckBoxPreference
-				android:key="vpn1"
-				android:title="@string/settings_vpn"
-				android:summary="@string/settings_vpn2" />
-	</PreferenceScreen>
+	
 	<PreferenceScreen android:title="@string/settings_options">
 			<ListPreference
 				android:key="pref"
@@ -128,8 +76,8 @@
 				android:summary="@string/settings_auto_headset2" />
 			<CheckBoxPreference
 				android:key="callrecord"
-				android:title="@string/settings_callrecord"
-				android:summary="@string/settings_callrecord2" />
+				android:title="录音"
+				android:summary="录音" />
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/settings_notifications">
 			<CheckBoxPreference
@@ -148,7 +96,7 @@
 				android:key="nodata"
 				android:title="@string/settings_nodata"
 				android:summary="@string/settings_nodata2" />
-			<org.sipdroid.sipua.ui.SipRingtonePreference
+			<com.mz.videorec.sipua.ui.SipRingtonePreference
 				android:key="sipringtone"
 				android:title="@string/settings_sipringtone"
 				android:summary="@string/settings_sipringtone2"
@@ -198,8 +146,8 @@
 		android:title="@string/codecs" >
         	<intent
                 	android:action="android.intent.action.MAIN"
-	                android:targetPackage="org.sipdroid.sipua"
-	                android:targetClass="org.sipdroid.codecs.Codecs$CodecSettings" />
+	                android:targetPackage="com.mz.videorec"
+	                android:targetClass="com.mz.videorec.codecs.Codecs$CodecSettings" />
 
 	</PreferenceScreen>
 	<PreferenceScreen android:title="@string/settings_advanced_options">

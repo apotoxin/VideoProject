@@ -7,12 +7,42 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
+    
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"></uses-permission>
+	<uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+	<uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+	<uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_CONTACTS"></uses-permission>
+	<uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+	<uses-permission android:name="android.permission.DISABLE_KEYGUARD"></uses-permission>
+	<uses-permission android:name="android.permission.CAMERA"></uses-permission>
+	<uses-permission android:name="android.permission.VIBRATE" ></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" ></uses-permission>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" ></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" ></uses-permission>
+	<uses-permission android:name="android.permission.BLUETOOTH" ></uses-permission>
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission>
+	<uses-permission android:name="android.permission.BROADCAST_STICKY" ></uses-permission>
+	
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+	<uses-feature android:name="android.hardware.wifi" android:required="false"/>
+	<uses-feature android:name="android.hardware.camera" android:required="false"/>
+	
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleInstance"
+        android:configChanges="orientation|keyboardHidden"
         android:theme="@style/AppTheme" >
+        
         <activity
             android:name="com.mz.videorec.HomeActivity"
             android:label="@string/app_name" >
@@ -20,8 +50,31 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                
             </intent-filter>
         </activity>
+        
+         <activity android:name="com.mz.videorec.sipua.ui.VideoCamera" android:label="@string/menu_video"
+	        android:excludeFromRecents="true" android:taskAffinity=""
+			android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+	        android:screenOrientation="landscape"
+	        android:clearTaskOnLaunch="true"
+	        android:configChanges="orientation|keyboardHidden">
+        </activity>
+        
+         
+          <activity android:name="com.mz.videorec.sipua.ui.Settings" android:label="@string/app_name"
+        	android:configChanges="orientation|keyboardHidden">
+        	android:excludeFromRecents="true" android:taskAffinity="">
+        </activity>
+        
+       <activity
+	   android:name="com.mz.videorec.codecs.Codecs$CodecSettings"
+	   android:label="@string/app_name" >
+        </activity>
+        
+        
+        <service android:name="com.mz.videorec.sipua.ui.RegisterService" />
     </application>
 
 </manifest>
