@@ -1,5 +1,8 @@
 package com.mz.videorec;
 
+import com.mz.videorec.codecs.Codec;
+import com.mz.videorec.codecs.H263;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -59,7 +62,10 @@ public class HomeActivity extends Activity implements OnClickListener {
 
 	private void more() {
 		// TODO Auto-generated method stub
-		
+		Codec  codec = new H263() ;
+		codec.init() ; 		
+		codec.encode(null, 0, null, 0) ;
+		codec.decode(null, null, 0) ; 
 	}
 
 	private void startAccount() {

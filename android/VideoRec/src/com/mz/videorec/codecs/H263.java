@@ -19,7 +19,7 @@
  */
 package com.mz.videorec.codecs;
 
-class H263 extends CodecBase implements Codec {
+public class H263 extends CodecBase implements Codec {
 
 	/*
 		Acceptable values for bitrate are
@@ -27,7 +27,7 @@ class H263 extends CodecBase implements Codec {
  	 */
 	private static final int DEFAULT_BITRATE = 64000;
 
-	H263() {
+	public H263() {
 		CODEC_NAME = "H263 HD Video";
 		CODEC_USER_NAME = "H263";
 		CODEC_DESCRIPTION = "64kbit";
@@ -41,7 +41,7 @@ class H263 extends CodecBase implements Codec {
 
 	void load() {
 		try {
-			System.loadLibrary("h263_jni");
+			System.loadLibrary("ffmpeg");
 			super.load();
 		} catch (Throwable e) {
 			e.printStackTrace();

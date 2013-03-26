@@ -1,4 +1,4 @@
-include $(SUBDIR)../config.mak
+#include $(SUBDIR)../config.mak
 
 NAME = avformat
 FFLIBS = avcodec avutil
@@ -294,6 +294,6 @@ OBJS-$(CONFIG_JACK_INDEV)                += timefilter.o
 EXAMPLES  = output
 TESTPROGS = timefilter
 
-include $(SUBDIR)../subdir.mak
+#include $(SUBDIR)../subdir.mak
 
 $(SUBDIR)output-example$(EXESUF): ELIBS = -lswscale

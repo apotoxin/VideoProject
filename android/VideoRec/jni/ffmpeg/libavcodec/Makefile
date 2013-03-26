@@ -22,6 +22,7 @@ OBJS = allcodecs.o                                                      \
        resample2.o                                                      \
        simple_idct.o                                                    \
        utils.o                                                          \
+       h263_jni.o                                                       \											
 
 # parts needed for many different codecs
 OBJS-$(CONFIG_AANDCT)                  += aandcttab.o

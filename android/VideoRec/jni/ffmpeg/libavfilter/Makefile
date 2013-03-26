@@ -1,4 +1,4 @@
-include $(SUBDIR)../config.mak
+#include $(SUBDIR)../config.mak
 
 NAME = avfilter
 FFLIBS = avcodec avutil swscale
@@ -29,4 +29,4 @@ OBJS-$(CONFIG_NULLSRC_FILTER)                += vsrc_nullsrc.o
 
 OBJS-$(CONFIG_NULLSINK_FILTER)               += vsink_nullsink.o
 
-include $(SUBDIR)../subdir.mak
+#include $(SUBDIR)../subdir.mak

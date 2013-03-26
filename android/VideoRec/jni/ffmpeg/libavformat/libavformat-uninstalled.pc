@@ -1,7 +1,7 @@
 prefix=
 exec_prefix=
 libdir=${pcfiledir}
-includedir=/home/ami/mywork/git/VideoProject/android/VideoRec/jni/ffmpeg
+includedir=/home/b395/mywork/git/VideoProject/android/VideoRec/jni/ffmpeg
 
 Name: libavformat
 Description: FFmpeg container format library

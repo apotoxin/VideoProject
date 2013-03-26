@@ -1,10 +1,10 @@
 #!/bin/bash
-
-PREBUILT=/home/ami/libs/android-ndk-r7c/toolchains/x86-4.4.3/prebuilt/linux-x86/
-PLATFORM=/home/ami/libs/android-ndk-r7c/platforms/android-9/arch-x86
+HOME=/home/b395
+PREBUILT=$HOME/libs/android-ndk-r8d/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86
+PLATFORM=$HOME/libs/android-ndk-r8d/platforms/android-9/arch-arm
 
 ./configure --target-os=linux \
-	--arch=x86 \
+	--arch=arm \
 	--enable-version3 \
 	--enable-gpl \
 	--enable-nonfree \
@@ -13,27 +13,29 @@ PLATFORM=/home/ami/libs/android-ndk-r7c/platforms/android-9/arch-x86
 	--disable-ffplay \
 	--disable-ffserver \
 	--disable-ffprobe \
-    --disable-shared \
-    --enable-static \
-    --disable-everything \
-    --enable-decoder=rawvideo \
-    --enable-decoder=h263 \
-    --enable-parser=h263 \
-    --enable-demuxer=h263 \
-	--disable-encoders \
 	--disable-muxers \
 	--disable-devices \
 	--disable-protocols \
 	--enable-protocol=file \
+	--enable-decoder=rawvideo \
+	--enable-encoder=rawvideo \
+	--enable-decoder=h263 \
+	--enable-encoder=h263 \
+	--enable-parser=h263 \
+	--enable-demuxer=h263 \
+	--enable-decoder=h264 \
+	--enable-encoder=h264 \
+	--enable-parser=h264 \
+	--enable-demuxer=h264 \
 	--enable-avfilter \
 	--disable-network \
 	--disable-mpegaudio-hp \
 	--disable-avdevice \
 	--enable-cross-compile \
-	--cc=$PREBUILT/bin/i686-android-linux-gcc-4.4.3 \
-	--cross-prefix=$PREBUILT/bin/i686-android-linux- \
-	--nm=$PREBUILT/bin/i686-android-linux-nm \
+	--cc=$PREBUILT/bin/arm-linux-androideabi-gcc \
+	--cross-prefix=$PREBUILT/bin/arm-linux-androideabi- \
+	--nm=$PREBUILT/bin/arm-linux-androideabi-nm \
 	--extra-cflags="-fPIC -DANDROID" \
 	--disable-asm \
-	--enable-debug=DEBUG \
-	--extra-ldflags="-Wl,-T,$PREBUILT/i686-android-linux/lib/ldscripts/elf_i386.x -Wl,-rpath-link=$PLATFORM/usr/lib -L$PLATFORM/usr/lib -nostdlib $PREBUILT/lib/gcc/i686-android-linux/4.4.3/crtbegin.o $PREBUILT/lib/gcc/i686-android-linux/4.4.3/crtend.o -lc -lm -ldl -llog"
+	--enable-neon \
+	--extra-ldflags="-Wl,-T,$PREBUILT/arm-linux-androideabi/lib/ldscripts/armelfb_linux_eabi.x -Wl,-rpath-link=$PLATFORM/usr/lib -L$PLATFORM/usr/lib -nostdlib $PREBUILT/lib/gcc/arm-linux-androideabi/4.6/crtbegin.o $PREBUILT/lib/gcc/arm-linux-androideabi/4.6/crtend.o -lc -lm -ldl"

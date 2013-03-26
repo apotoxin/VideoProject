@@ -1,4 +1,4 @@
-include $(SUBDIR)../config.mak
+#include $(SUBDIR)../config.mak
 
 NAME    = avdevice
 FFLIBS  = avformat avcodec avutil
@@ -30,4 +30,4 @@ OBJS-$(CONFIG_AUDIO_BEOS_OUTDEV)         += beosaudio.o
 
 SKIPHEADERS-$(HAVE_ALSA_ASOUNDLIB_H)     += alsa-audio.h
 
-include $(SUBDIR)../subdir.mak
+#include $(SUBDIR)../subdir.mak
